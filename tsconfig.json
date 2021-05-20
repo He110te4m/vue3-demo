@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "isolatedModules": true,
         "paths": {
             "@/*": ["src/*"],
             "components/*": ["src/components/*"],

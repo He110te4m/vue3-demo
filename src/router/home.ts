@@ -6,16 +6,8 @@ export const enum HomeRouteNames {
 
 export const homeRoutes: RouteRecordRaw[] = [
     {
-        path: '/',
-        name: '__app',
-        redirect: HomeRouteNames.index,
-        component: () => import('@/app.vue'),
-        children: [
-            {
-                path: '/home',
-                name: HomeRouteNames.index,
-                component: () => import('home/mod_home/index.vue')
-            }
-        ]
+        path: '/home',
+        name: HomeRouteNames.index,
+        component: () => import('home/mod_home/index.vue')
     }
 ];
