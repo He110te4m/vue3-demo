@@ -1,7 +1,14 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import { homeRoutes } from "./home";
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { HomeRouteNames, homeRoutes } from './home';
+
+const defaultRoutes: RouteRecordRaw[] = [
+    {
+        path: '/',
+        redirect: HomeRouteNames.index
+    }
+];
 
 export default createRouter({
     history: createWebHistory(),
-    routes: ([] as RouteRecordRaw[]).concat(homeRoutes)
+    routes: defaultRoutes.concat(homeRoutes)
 });
