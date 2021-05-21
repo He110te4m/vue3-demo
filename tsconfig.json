@@ -3,10 +3,12 @@
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"],
+            "common/*": ["src/common/*"],
             "components/*": ["src/components/*"],
             "home/*": ["src/home/*"],
             "router/*": ["src/router/*"],
-            "store/*": ["src/store/*"]
+            "store/*": ["src/store/*"],
+            "utils/*": ["src/utils/*"]
         },
         "target": "esnext",
         "module": "esnext",
