@@ -15,7 +15,8 @@ export default defineConfig({
             'components': pathResolve('src/components'),
             'home': pathResolve('src/home'),
             'router': pathResolve('src/router'),
-            'store': pathResolve('src/store')
+            'store': pathResolve('src/store'),
+            'utils': pathResolve('src/utils')
         }
     }
 });
