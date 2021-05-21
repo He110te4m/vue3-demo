@@ -1,0 +1,32 @@
+{
+    "vue3 组件": {
+        "prefix": "blog-comp",
+        "body": [
+            "<template>",
+            "</template>",
+            "",
+            "<script lang=\"ts\">",
+            "",
+            "/**",
+            " * @author: he110",
+            " * @since: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
+            " * @description:",
+            " */",
+            "",
+            "import { defineComponent } from 'vue';",
+            "",
+            "export default defineComponent({",
+            "    name: '${1:$TM_FILENAME_BASE}',",
+            "    setup: () => {",
+            "        return {};",
+            "    }",
+            "});",
+            "</script>",
+            "",
+            "<style lang=\"less\">",
+            "</style>",
+        ],
+        "description": "vue3 组件初始代码",
+        "scope": "vue"
+    }
+}
