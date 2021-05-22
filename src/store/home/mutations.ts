@@ -6,12 +6,14 @@
  * @Last Modified time: 2021-05-21 21:16:31
  */
 
-import { MutationTree } from 'vuex';
-import { HomeMutationsName } from './mutations_name';
-import { homeState } from './state';
+import type { HomeState } from './state';
 
-export const homeMutations: MutationTree<ReturnType<typeof homeState>> = {
-    [HomeMutationsName.updateSidebarExpandStatus] (state, status: boolean) {
+import { HomeMutationsName } from './mutations_name';
+
+export const homeMutations = {
+    [HomeMutationsName.updateSidebarExpandStatus](state: HomeState, status: boolean) {
         state.isExpandSidebar = status;
     }
 };
+
+export type HomeMutations = typeof homeMutations;

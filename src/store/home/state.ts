@@ -11,3 +11,5 @@ export function homeState () {
         isExpandSidebar: false
     };
 }
+
+export type HomeState = ReturnType<typeof homeState>;

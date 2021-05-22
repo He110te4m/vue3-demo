@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import { HomeRouteNames, homeRoutes } from './home';
+import { RouteNames as HomeRouteNames } from './modules/home';
+const routes = Object.values(import.meta.globEager('./modules/*.ts')).map(exp => exp.routes as RouteRecordRaw[]);
 
 const defaultRoutes: RouteRecordRaw[] = [
     {
@@ -10,5 +11,5 @@ const defaultRoutes: RouteRecordRaw[] = [
 
 export default createRouter({
     history: createWebHistory(),
-    routes: defaultRoutes.concat(homeRoutes)
+    routes: defaultRoutes.concat(...routes)
 });

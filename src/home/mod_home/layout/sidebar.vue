@@ -1,5 +1,5 @@
 <template>
-
+    <div>sidebar</div>
 </template>
 
 <script lang="ts">
@@ -11,13 +11,13 @@
  */
 
 import { defineComponent } from 'vue';
-import { useStore } from 'vuex';
+import { useHomeStore } from 'store/home/store';
 import { HomeMutationsName } from 'store/home/mutations_name';
 
 export default defineComponent({
     name: 'sidebar',
     setup: () => {
-        const store = useStore();
+        const store = useHomeStore();
         store.commit(HomeMutationsName.updateSidebarExpandStatus, true);
 
         return {};
