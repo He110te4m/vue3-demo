@@ -37,6 +37,8 @@ export default defineComponent({
 
         .container {
             flex: 1;
+            height: var(--full-height);
+            overflow-y: auto;
         }
     }
 </style>
