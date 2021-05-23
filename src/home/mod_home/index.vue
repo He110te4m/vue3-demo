@@ -37,7 +37,6 @@ export default defineComponent({
 
         .container {
             flex: 1;
-            background: var(--test-color);
         }
     }
 </style>

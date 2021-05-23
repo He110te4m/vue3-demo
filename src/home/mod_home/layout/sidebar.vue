@@ -43,6 +43,8 @@ function getStyle (width: number): Partial<CSSStyleDeclaration> {
 
 <style lang="less" scoped>
     .sidebar {
+        background: var(--white);
+
         &__expand-button {
             color: var(--link);
             position: fixed;
