@@ -14,8 +14,12 @@ const app = createApp(App);
 
 app.config.performance = isDev;
 
-app.use(router);
-app.use(store);
-app.use(Antd);
+app.use(router)
+    .use(store)
+    .use(Antd);
 
 app.mount('#app');
+
+if (isDev) {
+    (window as SafeAny).appRoot = app;
+}

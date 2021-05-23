@@ -7,6 +7,7 @@
         <template v-else>
             <span class="sidebar__expand-button hand iconfont icon-close1"
                   @click="changeSidebarExpandState(false)"></span>
+            <introduction />
         </template>
     </aside>
 </template>
@@ -19,45 +20,39 @@
  * @description:
  */
 
-import { computed, defineComponent, Ref, ref } from 'vue';
-import { HomeMutationsName } from 'store/home/mutations_name';
+import { computed, defineComponent } from 'vue';
 import { useStore } from 'store/index';
+import { HomeMutationsName } from 'store/home/mutations_name';
+import Introduction from './introduction.vue';
 
 export default defineComponent({
     name: 'sidebar',
+    components: {
+        Introduction,
+    },
     setup: () => {
         const store = useStore();
-        console.log(store);
-
-        const isShowSidebar = computed(() => store.state.home.isExpandSidebar)
-        const css = computed(() => getStyle(store.getters.sidebarWidth));
 
         return {
-            isShowSidebar,
-            wrapperCss: css,
-            changeSidebarExpandState: (state: boolean) => {
-                store.commit(HomeMutationsName.switchSidebarExpandStatus, state);
+            isShowSidebar: computed(() => store.state.home.isExpandSidebar),
+            wrapperCss: computed(() => ({
+                width: `${store.getters.sidebarWidth}px`
+            })),
+            changeSidebarExpandState: (status: boolean) => {
+                store.commit(HomeMutationsName.switchSidebarExpandStatus, status);
             }
         };
     }
 });
-
-function getStyle (width: number): Partial<CSSStyleDeclaration> {
-    return {
-        width: `${width}px`
-    };
-}
 
 </script>
 
 <style lang="less" scoped>
     .sidebar {
         background: var(--white);
-        position: fixed;
-        top: 0;
-        left: 0;
         height: var(--full-height);
         transition: width var(--animate-fast);
+        text-align: center;
 
         &__expand-button {
             color: var(--link);
