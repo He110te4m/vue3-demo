@@ -20,5 +20,8 @@ export default defineConfig({
             'store': pathResolve('src/store'),
             'utils': pathResolve('src/utils')
         }
+    },
+    server: {
+        open: '/'
     }
 });
