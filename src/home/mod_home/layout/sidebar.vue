@@ -56,7 +56,7 @@ function getStyle (width: number): Partial<CSSStyleDeclaration> {
         position: fixed;
         top: 0;
         left: 0;
-        height: 100vh;
+        height: var(--full-height);
         transition: width var(--animate-fast);
 
         &__expand-button {
