@@ -14,8 +14,10 @@ export const store = createStore({
     plugins: isDev ? [createLogger()] : []
 });
 
-export type GlobalStore = Omit<RootStore, 'getters' | 'commit' | 'dispatch'> & {
-    home: HomeStore;
+export type GlobalStore = Omit<RootStore, 'state' | 'getters' | 'commit' | 'dispatch'> & {
+    state: RootStore['state'] & {
+        home: HomeStore['state'];
+    };
     getters: RootStore['getters'] & HomeStore['getters'];
     commit: RootStore['commit'] & HomeStore['commit'];
     dispatch: RootStore['dispatch'] & HomeStore['dispatch'];
