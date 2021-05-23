@@ -9,3 +9,5 @@
 export function rootState () {
     return {};
 }
+
+export type RootState = ReturnType<typeof rootState>;

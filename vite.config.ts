@@ -10,7 +10,9 @@ export default defineConfig({
     plugins: [vue()],
     resolve: {
         alias: {
+            'static': pathResolve('public/static'),
             '@': pathResolve('src'),
+            'apis': pathResolve('src/apis'),
             'common': pathResolve('src/common'),
             'components': pathResolve('src/components'),
             'home': pathResolve('src/home'),
