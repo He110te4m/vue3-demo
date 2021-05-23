@@ -1,5 +1,8 @@
 <template>
-    <div>sidebar</div>
+    <aside class="sidebar" :style="wrapperCss">
+        <span class="sidebar__expand-button hand iconfont icon-menu"
+              @click="changeSidebarExpandState"></span>
+    </aside>
 </template>
 
 <script lang="ts">
@@ -10,20 +13,43 @@
  * @description:
  */
 
-import { defineComponent } from 'vue';
-import { useHomeStore } from 'store/home/store';
+import { computed, defineComponent, Ref, ref } from 'vue';
 import { HomeMutationsName } from 'store/home/mutations_name';
+import { useStore } from 'store/index';
 
 export default defineComponent({
     name: 'sidebar',
     setup: () => {
-        const store = useHomeStore();
-        store.commit(HomeMutationsName.updateSidebarExpandStatus, true);
+        const store = useStore();
 
-        return {};
+        const css = computed(() => getStyle(store.getters.sidebarWidth));
+
+        return {
+            wrapperCss: css,
+            changeSidebarExpandState: () => {
+                store.commit(HomeMutationsName.switchSidebarExpandStatus, 'auto');
+            }
+        };
     }
 });
+
+function getStyle (width: number): Partial<CSSStyleDeclaration> {
+    return {
+        width: `${width}px`
+    };
+}
+
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+    .sidebar {
+        &__expand-button {
+            color: var(--link);
+            position: fixed;
+            font-size: 2.8rem;
+            left: 2rem;
+            top: 1rem;
+            z-index: 20;
+        }
+    }
 </style>

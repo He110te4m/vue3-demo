@@ -1,5 +1,8 @@
 <template>
-    <sidebar />
+    <div class="home">
+        <sidebar />
+        <main class="container"></main>
+    </div>
 </template>
 
 <script lang="ts">
@@ -10,12 +13,9 @@
  * @description:
  */
 
-import { defineComponent, onBeforeUnmount } from 'vue';
-import { useStore } from 'vuex';
-import { homeStore } from 'store/home/store';
+import { defineComponent } from 'vue';
 import Sidebar from './layout/sidebar.vue';
-
-const storeKey = 'home';
+import 'common/style/home/index.less';
 
 export default defineComponent({
     name: 'Index',
@@ -23,18 +23,21 @@ export default defineComponent({
         Sidebar
     },
     setup: () => {
-        const store = useStore();
-
-        store.registerModule(storeKey, homeStore);
-        onBeforeUnmount(() => {
-            store.unregisterModule(storeKey);
-        });
-
         return {};
     }
 });
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+    .home {
+        display: flex;
+        width: 100%;
+        height: 100%;
+
+        .container {
+            flex: 1;
+            background: var(--test-color);
+        }
+    }
 </style>
