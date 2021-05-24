@@ -1,10 +1,11 @@
 import { createLogger, createStore } from 'vuex';
-import { HomeStore, homeStore } from './home/store';
-import { RootStore, rootStore } from './root/store';
+import { homeStore } from './home/store';
+import { rootStore } from './root/store';
+import { GlobalStore } from './types';
 
 const isDev = import.meta.env.DEV;
 
-const modules = {
+export const modules = {
     home: homeStore
 };
 
@@ -13,15 +14,6 @@ export const store = createStore({
     modules,
     plugins: isDev ? [createLogger()] : []
 });
-
-export type GlobalStore = Omit<RootStore, 'state' | 'getters' | 'commit' | 'dispatch'> & {
-    state: RootStore['state'] & {
-        home: HomeStore['state'];
-    };
-    getters: RootStore['getters'] & HomeStore['getters'];
-    commit: RootStore['commit'] & HomeStore['commit'];
-    dispatch: RootStore['dispatch'] & HomeStore['dispatch'];
-};
 
 export function useStore() {
     return store as GlobalStore;
