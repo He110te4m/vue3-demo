@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "eslint": "eslint src --ext .ts,.vue",
+    "eslint:fix": "eslint src --ext .ts,.vue -- --fix"
   },
   "dependencies": {
     "ant-design-vue": "~2.1.6",
@@ -15,9 +17,12 @@
   },
   "devDependencies": {
     "@types/node": "~15.3.1",
+    "@typescript-eslint/eslint-plugin": "~4.25.0",
+    "@typescript-eslint/parser": "~4.25.0",
     "@vitejs/plugin-vue": "~1.2.2",
     "@vue/compiler-sfc": "~3.0.5",
     "autoprefixer": "~10.2.5",
+    "babel-eslint": "~10.1.0",
     "babel-plugin-import": "~1.13.3",
     "eslint": "~7.26.0",
     "eslint-plugin-vue": "~7.9.0",

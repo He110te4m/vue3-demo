@@ -1,9 +1,10 @@
-import '';
+import 'axios';
 
 declare global {
     type SafeAny = any;
     type AnyObj = Record<string, SafeAny>;
     type AnyFunc = (...args: SafeAny[]) => SafeAny;
+    type UnknownObj = Record<string, unknown>;
 
     interface ApiReturn<T = SafeAny> extends AnyObj {
         code: number;

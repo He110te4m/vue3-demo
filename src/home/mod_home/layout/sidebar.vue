@@ -3,10 +3,13 @@
            :style="wrapperCss">
         <span v-if="!isShowSidebar"
               class="sidebar__expand-button hand iconfont icon-menu"
-              @click="changeSidebarExpandState(true)"></span>
+              @click="changeSidebarExpandState(true)">
+        </span>
         <template v-else>
-            <span class="sidebar__expand-button hand iconfont icon-close1"
-                  @click="changeSidebarExpandState(false)"></span>
+            <span v-show="isIndexPage"
+                  class="sidebar__expand-button hand iconfont icon-close1"
+                  @click="changeSidebarExpandState(false)">
+            </span>
             <introduction />
         </template>
     </aside>
@@ -24,16 +27,20 @@ import { computed, defineComponent } from 'vue';
 import { useStore } from 'store/index';
 import { HomeMutationsName } from 'store/home/mutations_name';
 import Introduction from './introduction.vue';
+import { useRoute } from 'vue-router';
+import { RouteNames } from '@/router/modules/home';
 
 export default defineComponent({
-    name: 'sidebar',
+    name: 'Sidebar',
     components: {
-        Introduction,
+        Introduction
     },
     setup: () => {
         const store = useStore();
 
         return {
+            isIndexPage: useRoute().name === RouteNames.index,
+
             isShowSidebar: computed(() => store.state.home.isExpandSidebar),
             wrapperCss: computed(() => ({
                 width: `${store.getters.sidebarWidth}px`
