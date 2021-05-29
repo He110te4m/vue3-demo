@@ -23,7 +23,7 @@
             "});",
             "</script>",
             "",
-            "<style lang=\"less\">",
+            "<style lang=\"less\" scoped>",
             "</style>",
         ],
         "description": "vue3 组件初始代码",
