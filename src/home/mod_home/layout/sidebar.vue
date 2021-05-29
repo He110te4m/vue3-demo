@@ -7,7 +7,7 @@
         </span>
         <template v-else>
             <span v-show="isIndexPage"
-                  class="sidebar__expand-button hand iconfont icon-close1"
+                  class="sidebar__expand-button hand iconfont icon-close"
                   @click="changeSidebarExpandState(false)">
             </span>
             <introduction />
@@ -62,7 +62,7 @@ export default defineComponent({
         text-align: center;
 
         &__expand-button {
-            color: var(--link);
+            color: var(--link-color);
             position: fixed;
             font-size: 2.8rem;
             left: 2rem;

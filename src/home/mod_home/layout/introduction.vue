@@ -1,10 +1,12 @@
 <template>
     <div class="introduction">
-        <div class="introduction__avatar--wrapper">
-            <img src="static/imgs/avatar.jpg"
-                 alt=""
-                 class="introduction__avatar" />
-        </div>
+        <author-info />
+        <div class="introduction__separator"></div>
+        <site-info />
+        <div class="introduction__separator"></div>
+        <social-link-info />
+        <div class="introduction__separator"></div>
+        <link-info />
     </div>
 </template>
 
@@ -16,25 +18,36 @@
  */
 
 import { defineComponent } from 'vue';
+import AuthorInfo from './components/author_info.vue';
+import LinkInfo from './components/link_info.vue';
+import SiteInfo from './components/site_info.vue';
+import SocialLinkInfo from './components/social_link_info.vue';
 
 export default defineComponent({
     name: 'Introduction',
+    components: {
+        AuthorInfo,
+        LinkInfo,
+        SiteInfo,
+        SocialLinkInfo
+    },
     setup: () => {
-        return {};
+        return {
+        };
     }
 });
 </script>
 
 <style lang="less" scoped>
 .introduction {
-    width: 30rem;
-    height: 100%;
+    width: calc(100% - 2rem);
+    height: calc(100% - 6.4rem);
     margin: 3.2rem 0.6rem;
 
     &__separator {
         background-color: var(--separator-color);
         height: 0.1rem;
-        margin: 1rem 0;
+        margin: 1rem 2rem;
     }
 }
 </style>

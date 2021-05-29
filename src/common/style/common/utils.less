@@ -1,12 +1,17 @@
-:root {
-    --animate-fast: .3s;
-    --animate-mid: .5s;
-    --animate-slow: 1s;
-
-    --full-width: 100vw;
-    --full-height: 100vh;
-}
 
 .hand {
     cursor: pointer;
+}
+
+.link:extend(.hand) {
+    color: var(--link-color);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--link-hover-color);
+    }
+
+    &.disabled {
+        color: var(--link-disabled-color);
+    }
 }
