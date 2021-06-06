@@ -1,6 +1,7 @@
 <template>
     <div class="home">
         <sidebar />
+        <search />
         <main class="container"></main>
     </div>
 </template>
@@ -15,12 +16,14 @@
 
 import { defineComponent } from 'vue';
 import Sidebar from './layout/sidebar.vue';
+import Search from './layout/search.vue';
 import 'common/style/home/index.less';
 
 export default defineComponent({
     name: 'Index',
     components: {
-        Sidebar
+        Sidebar,
+        Search
     },
     setup: () => {
         return {};

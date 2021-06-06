@@ -1,17 +1,15 @@
 <template>
     <aside class="sidebar"
            :style="wrapperCss">
-        <span v-if="!isShowSidebar"
+        <span v-show="!isShowSidebar"
               class="sidebar__expand-button hand iconfont icon-menu"
               @click="changeSidebarExpandState(true)">
         </span>
-        <template v-else>
-            <span v-show="isIndexPage"
-                  class="sidebar__expand-button hand iconfont icon-close"
-                  @click="changeSidebarExpandState(false)">
-            </span>
-            <introduction />
-        </template>
+        <span v-show="isShowSidebar && isIndexPage"
+                class="sidebar__expand-button hand iconfont icon-close"
+                @click="changeSidebarExpandState(false)">
+        </span>
+        <introduction v-show="isShowSidebar" />
     </aside>
 </template>
 
@@ -67,7 +65,7 @@ export default defineComponent({
             font-size: 2.8rem;
             left: 2rem;
             top: 1rem;
-            z-index: 20;
+            z-index: var(--menu-index);
         }
     }
 </style>
