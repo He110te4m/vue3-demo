@@ -2,7 +2,11 @@
     <div class="home">
         <sidebar />
         <search />
-        <main class="container"></main>
+        <main class="container">
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
+        </main>
     </div>
 </template>
 

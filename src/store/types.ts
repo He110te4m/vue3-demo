@@ -1,42 +1,77 @@
-import type { ActionHandler, CommitOptions, DispatchOptions, GetterTree, MutationTree } from 'vuex';
+import type { ActionHandler, ActionObject, ActionTree, CommitOptions, DispatchOptions, GetterTree, MutationTree } from 'vuex';
 import type { modules, store } from './index';
 import type { RootStore } from './root/store';
 
-export type FixGetter<T extends GetterTree<any, any>> = {
-    [K in keyof T]: ReturnType<T[K]>;
+export type FixState<TState extends AnyObj | (() => AnyObj)> = TState extends AnyFunc ? ReturnType<TState> : TState;
+
+export type FixGetter<TGetter extends GetterTree<any, any>> = {
+    [TGetterKey in keyof TGetter]: ReturnType<TGetter[TGetterKey]>;
 };
 
-export type FixDispatch<T extends Record<string, ActionHandler<any, any>>> = <K extends keyof T>(
-    key: K,
-    payload?: Parameters<T[K]>[1],
-    options?: DispatchOptions
-) => ReturnType<T[K]>;
-
-export type FixCommit<T extends MutationTree<any>> = <K extends keyof T, P extends Parameters<T[K]>[1]>(
-    key: K,
-    payload?: P,
+export type FixCommit<TMutation extends MutationTree<any>> = <TMutationName extends keyof TMutation>(
+    key: TMutationName,
+    payload?: Parameters<TMutation[TMutationName]>[1],
     options?: CommitOptions
-) => ReturnType<T[K]>;
+) => ReturnType<TMutation[TMutationName]>;
+
+export type FixNSCommit<TMutation extends MutationTree<any>, TNameSpace extends string> = <
+    TMutationName extends `${TNameSpace}/${keyof TMutation & string}`,
+    TMutationKey extends TMutationName extends `${TNameSpace}/${infer TKey}` ? TKey : never
+>(
+    key: TMutationName,
+    payload?: Parameters<TMutation[TMutationKey]>[1],
+    options?: CommitOptions
+) => ReturnType<TMutation[TMutationName]>;
+
+type GetActionHandler<TActionTree extends ActionTree<SafeAny, SafeAny>> = {
+    [TActionName in keyof TActionTree]: TActionTree[TActionName] extends ActionHandler<SafeAny, SafeAny>
+        ? TActionTree[TActionName]
+        : TActionTree[TActionName] extends ActionObject<SafeAny, SafeAny>
+        ? TActionTree[TActionName]['handler']
+        : AnyFunc;
+};
+
+export type FixDispatch<TAction extends ActionTree<SafeAny, SafeAny>> = <TActionName extends keyof TAction>(
+    key: TActionName,
+    payload?: Parameters<GetActionHandler<TAction>[TActionName]>[1],
+    options?: DispatchOptions
+) => ReturnType<GetActionHandler<TAction>[TActionName]>;
+
+export type FixNSDispatch<TAction extends ActionTree<SafeAny, SafeAny>, TNameSpace extends string> = <
+    TActionName extends `${TNameSpace}/${keyof TAction & string}`,
+    TActionKey extends TActionName extends `${TNameSpace}/${infer TKey}` ? TKey : never
+>(
+    key: TActionName,
+    payload?: Parameters<GetActionHandler<TAction>[TActionKey]>[1],
+    options?: DispatchOptions
+) => ReturnType<GetActionHandler<TAction>[TActionKey]>;
 
 // 取所有需要生成声明的 vuex 模块及其注册的 key
 type ModuleType = typeof modules;
 type ModuleKey = keyof ModuleType;
+type ModuleWithNameSpace = {
+    [TKey in ModuleKey]: (ModuleType[TKey] & { namespaced?: boolean })['namespaced'] extends true ? TKey : never;
+}[ModuleKey];
 
 // vuex 模块具体字段类型
-type ModuleField<T extends keyof ModuleType[ModuleKey]> = {
-    [K in ModuleKey]: ModuleType[K][T];
+type ModuleField<TModuleKey extends keyof ModuleType[ModuleKey]> = {
+    [TModule in ModuleKey]: ModuleType[TModule][TModuleKey];
 };
 
 // vuex 模块的 state 集合
 type ModuleState = {
-    [K in keyof ModuleField<'state'>]: ReturnType<ModuleField<'state'>[K]>;
+    [TModule in ModuleKey]: FixState<ModuleField<'state'>[TModule]>;
 };
 
 // vuex 模块的 getters 类型交叉
 type Getters = ModuleField<'getters'>;
 type ModuleGetters = UnionToIntersection<
     {
-        [K in keyof Getters]: FixGetter<Getters[K]>;
+        [TModule in ModuleKey]: TModule extends ModuleWithNameSpace
+            ? {
+                  [TKey in TModule]: FixGetter<Getters[TKey]>;
+              }
+            : FixGetter<Getters[TModule]>;
     }[ModuleKey]
 >;
 
@@ -44,7 +79,7 @@ type ModuleGetters = UnionToIntersection<
 type Mutations = ModuleField<'mutations'>;
 type ModuleCommits = UnionToIntersection<
     {
-        [K in keyof Mutations]: FixCommit<Mutations[K]>;
+        [TModule in ModuleKey]: TModule extends ModuleWithNameSpace ? FixNSCommit<Mutations[TModule], TModule> : FixCommit<Mutations[TModule]>;
     }[ModuleKey]
 >;
 
@@ -52,7 +87,7 @@ type ModuleCommits = UnionToIntersection<
 type Actions = ModuleField<'actions'>;
 type ModuleDispatch = UnionToIntersection<
     {
-        [K in keyof Actions]: FixDispatch<Actions[K]>;
+        [TModule in ModuleKey]: TModule extends ModuleWithNameSpace ? FixNSDispatch<Actions[TModule], TModule> : FixDispatch<Actions[TModule]>;
     }[ModuleKey]
 >;
 

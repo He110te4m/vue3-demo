@@ -3,14 +3,14 @@
         "baseUrl": ".",
         "paths": {
             "static/*": ["public/static/*"],
-            "@/*": ["src/*"],
             "apis/*": ["src/apis/*"],
             "common/*": ["src/common/*"],
             "components/*": ["src/components/*"],
             "home/*": ["src/home/*"],
             "router/*": ["src/router/*"],
             "store/*": ["src/store/*"],
-            "utils/*": ["src/utils/*"]
+            "utils/*": ["src/utils/*"],
+            "@/*": ["src/*"],
         },
         "target": "esnext",
         "module": "esnext",

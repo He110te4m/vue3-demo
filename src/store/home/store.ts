@@ -20,9 +20,3 @@ export const homeStore = {
     getters: homeGetters,
     actions: homeActions
 };
-
-export type HomeStore = Omit<Store<HomeState>, 'commit' | 'getters' | 'dispatch'> & {
-    getters: FixGetter<HomeGetters>;
-    dispatch: FixDispatch<HomeActions>;
-    commit: FixCommit<HomeMutations>;
-};

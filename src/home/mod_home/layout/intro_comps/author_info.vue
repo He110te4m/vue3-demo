@@ -1,6 +1,6 @@
 <template>
     <div class="author-info">
-        <img src="static/imgs/avatar.jpg"
+        <img src="/static/imgs/avatar.jpg"
              alt=""
              class="author-info__avatar hand"
              @click="goHome()" />
