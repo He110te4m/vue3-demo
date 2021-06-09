@@ -6,8 +6,10 @@
  * @Last Modified time: 2021-05-21 20:41:38
  */
 
+import type { FixState } from 'store/types';
+
 export function rootState () {
     return {};
 }
 
-export type RootState = ReturnType<typeof rootState>;
+export type RootState = FixState<typeof rootState>;

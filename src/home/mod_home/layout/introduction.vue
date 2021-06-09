@@ -18,10 +18,10 @@
  */
 
 import { defineComponent } from 'vue';
-import AuthorInfo from './components/author_info.vue';
-import LinkInfo from './components/link_info.vue';
-import SiteInfo from './components/site_info.vue';
-import SocialLinkInfo from './components/social_link_info.vue';
+import AuthorInfo from './intro_comps/author_info.vue';
+import LinkInfo from './intro_comps/link_info.vue';
+import SiteInfo from './intro_comps/site_info.vue';
+import SocialLinkInfo from './intro_comps/social_link_info.vue';
 
 export default defineComponent({
     name: 'Introduction',

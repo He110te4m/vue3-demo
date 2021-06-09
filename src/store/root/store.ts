@@ -7,7 +7,7 @@
  */
 
 import type { Store } from 'vuex';
-import type { FixCommit, FixDispatch, FixGetter } from '../types';
+import type { FixCommit, FixDispatch, FixGetter, FixState } from '../types';
 
 import { RootActions, rootActions } from './actions';
 import { RootGetters, rootGetters } from './getters';
@@ -21,7 +21,8 @@ export const rootStore = {
     actions: rootActions
 };
 
-export type RootStore = Omit<Store<RootState>, 'commit' | 'getters' | 'dispatch'> & {
+export type RootStore = Omit<Store<RootState>, 'state' | 'commit' | 'getters' | 'dispatch'> & {
+    state: FixState<RootState>;
     getters: FixGetter<RootGetters>;
     dispatch: FixDispatch<RootActions>;
     commit: FixCommit<RootMutations>;
