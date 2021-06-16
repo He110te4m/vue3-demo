@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 const isDev = import.meta.env.DEV;
 
 const AXIOS_CONFIG: AxiosRequestConfig = {
-    baseURL: isDev ? 'http://localhost:3000/' : '/api/'
+    baseURL: isDev ? 'http://localhost:8080/' : '/api/'
 };
 
 const service = axios.create(AXIOS_CONFIG);
