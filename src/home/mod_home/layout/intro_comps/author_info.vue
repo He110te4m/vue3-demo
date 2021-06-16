@@ -1,28 +1,30 @@
 <template>
-    <div class="author-info">
-        <img src="/static/imgs/avatar.jpg"
-             alt=""
-             class="author-info__avatar hand"
-             @click="goHome()" />
+    <a-spin :spinning="isLoading">
+        <div class="author-info">
+            <img src="/static/imgs/avatar.jpg"
+                 alt=""
+                 class="author-info__avatar hand"
+                 @click="goHome()" />
 
-        <div class="author-info__author link"
-             @click="goHome()">
-            {{ author }}
+            <div class="author-info__author link"
+                 @click="goHome()">
+                {{ author }}
+            </div>
+
+            <div class="author-info__site-name link"
+                 @click="goHome()">
+                {{ siteName }}
+            </div>
+
+            <dl class="author-info__description">
+                <dd v-for="(item, idx) in introList"
+                    :key="`desc-${idx}`"
+                    class="author-info__description--item">
+                    {{ item }}
+                </dd>
+            </dl>
         </div>
-
-        <div class="author-info__site-name link"
-             @click="goHome()">
-            {{ siteName }}
-        </div>
-
-        <dl class="author-info__description">
-            <dd v-for="(item, idx) in introList"
-                :key="`desc-${idx}`"
-                class="author-info__description--item">
-                {{ item }}
-            </dd>
-        </dl>
-    </div>
+    </a-spin>
 </template>
 
 <script lang="ts">
@@ -33,20 +35,45 @@
  * @description:
  */
 
-import { RouteNames } from 'router/modules/home';
+import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { defineComponent } from 'vue';
+import { RouteNames } from 'router/modules/home';
+import { getSiteInfo } from 'apis/site';
+import { message } from 'ant-design-vue';
 
 export default defineComponent({
     name: 'AuthorInfo',
     setup: () => {
+        const isLoading = ref(false);
+        const authorName = ref('');
+        let introList = ref([] as string[]);
+        const siteName = ref('');
+
+        const loadData = async () => {
+            isLoading.value = true;
+            const { code, msg, data = {} } = await getSiteInfo();
+            isLoading.value = false;
+
+            if (code) {
+                message.error(msg || 'fail to load site info');
+                return;
+            }
+
+            const { author = '', name = '', desc = [] } = data;
+            authorName.value = author;
+            siteName.value = name;
+            introList.value = desc;
+        }
+
+        onMounted(() => {
+            loadData();
+        });
+
         return {
-            author: 'He110',
-            siteName: 'He110\'s Blog',
-            introList: [
-                '须知少日拏云志',
-                '曾许人间第一流'
-            ],
+            isLoading,
+            author: authorName,
+            siteName,
+            introList,
             goHome: () => {
                 useRouter().push({
                     name: RouteNames.index

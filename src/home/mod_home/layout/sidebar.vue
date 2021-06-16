@@ -6,8 +6,8 @@
               @click="changeSidebarExpandState(true)">
         </span>
         <span v-show="isShowSidebar && isIndexPage"
-                class="sidebar__expand-button hand iconfont icon-close"
-                @click="changeSidebarExpandState(false)">
+              class="sidebar__expand-button hand iconfont icon-close"
+              @click="changeSidebarExpandState(false)">
         </span>
         <introduction v-show="isShowSidebar" />
     </aside>
@@ -37,7 +37,7 @@ export default defineComponent({
         const store = useStore();
 
         return {
-            isIndexPage: useRoute().name === RouteNames.index,
+            isIndexPage: useRoute().name === RouteNames.articles,
 
             isShowSidebar: computed(() => store.state.home.isExpandSidebar),
             wrapperCss: computed(() => ({
