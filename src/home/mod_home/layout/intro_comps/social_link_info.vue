@@ -4,7 +4,7 @@
             :key="`social-link-${idx}`"
             class="social-link-info__item link">
             <span :title="item.title"
-                :class="[ 'iconfont', item.icon ]">
+                  :class="[ 'iconfont', item.icon ]">
             </span>
         </dd>
     </dl>
@@ -18,23 +18,39 @@
  * @description:
  */
 
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
+import { getSocials } from 'apis/social';
+import { message } from 'ant-design-vue';
+
+interface SocialInfo {
+    id: number;
+    icon: string;
+    title: string;
+    url: string;
+}
 
 export default defineComponent({
     name: 'SocialLinkInfo',
     setup: () => {
+        const socialList = ref([] as SocialInfo[]);
+
+        const loadData = async () => {
+            const { code, msg, data = [] } = await getSocials()
+
+            if (code) {
+                message.error(msg || 'fail to load social link list!')
+                return;
+            }
+
+            socialList.value = data;
+        };
+
+        onMounted(() => {
+            loadData();
+        });
+
         return {
-            links: [
-                {
-                    title: 'OICQ',
-                    icon: 'icon-oicq',
-                    val: '123456'
-                }, {
-                    title: 'mail',
-                    icon: 'icon-mail',
-                    val: 'qq.com'
-                }
-            ]
+            links: socialList
         };
     }
 });
