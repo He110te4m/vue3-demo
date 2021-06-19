@@ -3,7 +3,10 @@
         <dd v-for="(item, idx) in links"
             :key="`link-${idx}`"
             class="link-info__item">
-            <span :title="item.title" class="link">{{ item.title }}</span>
+            <span :title="item.title"
+                  class="link">
+                {{ item.title }}
+            </span>
         </dd>
     </dl>
 </template>
@@ -16,18 +19,40 @@
  * @description:
  */
 
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
+import { getLinks } from 'apis/link';
+import { message } from 'ant-design-vue';
+
+interface LinkInfo {
+    id: number;
+    avatar: string;
+    title: string;
+    desc: string;
+    url: string;
+}
 
 export default defineComponent({
     name: 'LinkInfo',
     setup: () => {
+        const linkList = ref([] as LinkInfo[]);
+
+        const loadData = async () => {
+            const { code, msg, data = [] } = await getLinks();
+
+            if (code) {
+                message.error(msg || 'fail to load link list!');
+                return;
+            }
+
+            linkList.value = data;
+        };
+
+        onMounted(() => {
+            loadData();
+        });
+
         return {
-            links: [
-                {
-                    title: 'zhang san',
-                    url: ''
-                }
-            ]
+            links: linkList
         };
     }
 });
@@ -38,5 +63,10 @@ export default defineComponent({
         display: flex;
         padding: 0 2rem;
         justify-content: center;
+        flex-wrap: wrap;
+
+        &__item {
+            margin-right: 1rem;
+        }
     }
 </style>

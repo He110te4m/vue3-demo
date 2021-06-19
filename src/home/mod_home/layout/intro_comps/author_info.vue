@@ -1,30 +1,28 @@
 <template>
-    <a-spin :spinning="isLoading">
-        <div class="author-info">
-            <img src="/static/imgs/avatar.jpg"
-                 alt=""
-                 class="author-info__avatar hand"
-                 @click="goHome()" />
+    <div class="author-info">
+        <img src="/static/imgs/avatar.jpg"
+             alt=""
+             class="author-info__avatar hand"
+             @click="goHome()" />
 
-            <div class="author-info__author link"
-                 @click="goHome()">
-                {{ author }}
-            </div>
-
-            <div class="author-info__site-name link"
-                 @click="goHome()">
-                {{ siteName }}
-            </div>
-
-            <dl class="author-info__description">
-                <dd v-for="(item, idx) in introList"
-                    :key="`desc-${idx}`"
-                    class="author-info__description--item">
-                    {{ item }}
-                </dd>
-            </dl>
+        <div class="author-info__author link"
+             @click="goHome()">
+            {{ author }}
         </div>
-    </a-spin>
+
+        <div class="author-info__site-name link"
+             @click="goHome()">
+            {{ siteName }}
+        </div>
+
+        <dl class="author-info__description">
+            <dd v-for="(item, idx) in introList"
+                :key="`desc-${idx}`"
+                class="author-info__description--item">
+                {{ item }}
+            </dd>
+        </dl>
+    </div>
 </template>
 
 <script lang="ts">
@@ -44,33 +42,29 @@ import { message } from 'ant-design-vue';
 export default defineComponent({
     name: 'AuthorInfo',
     setup: () => {
-        const isLoading = ref(false);
         const authorName = ref('');
         let introList = ref([] as string[]);
         const siteName = ref('');
 
         const loadData = async () => {
-            isLoading.value = true;
             const { code, msg, data = {} } = await getSiteInfo();
-            isLoading.value = false;
 
             if (code) {
-                message.error(msg || 'fail to load site info');
+                message.error(msg || 'fail to load site info!');
                 return;
             }
 
             const { author = '', name = '', desc = [] } = data;
             authorName.value = author;
             siteName.value = name;
-            introList.value = desc;
-        }
+            introList.value = desc.split('\\n');
+        };
 
         onMounted(() => {
             loadData();
         });
 
         return {
-            isLoading,
             author: authorName,
             siteName,
             introList,
