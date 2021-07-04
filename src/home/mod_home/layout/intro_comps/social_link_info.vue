@@ -45,9 +45,7 @@ export default defineComponent({
             socialList.value = data;
         };
 
-        onMounted(() => {
-            loadData();
-        });
+        onMounted(loadData);
 
         return {
             links: socialList

@@ -47,9 +47,7 @@ export default defineComponent({
             linkList.value = data;
         };
 
-        onMounted(() => {
-            loadData();
-        });
+        onMounted(loadData);
 
         return {
             links: linkList
