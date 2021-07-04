@@ -60,9 +60,7 @@ export default defineComponent({
             introList.value = desc.split('\\n');
         };
 
-        onMounted(() => {
-            loadData();
-        });
+        onMounted(loadData);
 
         return {
             author: authorName,
