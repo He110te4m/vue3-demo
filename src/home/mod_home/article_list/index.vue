@@ -16,11 +16,11 @@
  * @description:
  */
 
-import type { Article } from './interface';
+import type { ArticleInfo } from '../interface';
 
 import { defineComponent, onMounted, ref } from 'vue';
-import { getArticles } from 'apis/article';
-import { message } from 'ant-design-vue';
+import { useStore } from 'store/index';
+import { ArticleActionsName } from 'store/article/actions_name';
 import ArticleCard from './article_card.vue';
 
 export default defineComponent({
@@ -29,20 +29,13 @@ export default defineComponent({
         ArticleCard
     },
     setup: () => {
-        const list = ref([] as Article[]);
+        const list = ref([] as ArticleInfo[]);
 
-        const loadData = async () => {
-            const { code, msg, data = [] } = await getArticles(1);
-
-            if (code) {
-                message.error(msg || 'fail to load site info!');
-                return;
-            }
-
-            list.value = data;
-        };
-
-        onMounted(loadData);
+        onMounted(async () => {
+            const store = useStore();
+            await store.dispatch(ArticleActionsName.initArticle);
+            list.value = store.state.article.articles;
+        });
 
         return {
             list
@@ -53,13 +46,14 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .article-list {
-    max-width: 90rem;
-    margin: 6rem auto;
+    max-width: var(--container-max-width);
+    margin: var(--container-margin);
 
     &__item {
-        padding: 1.6rem;
+        padding: var(--lg-seperator-size);
         background-color: var(--block-bg-color);
-        box-shadow: 0 0 1rem var(--block-shadow-color);
+        box-shadow: var(--block-shadow);
+        margin-bottom: var(--article-margin);
     }
 }
 </style>

@@ -12,10 +12,10 @@ const md = new Markdown({
 export function register(app: App) {
     app.directive('markdown', {
         mounted(el, binding) {
-            el.innerHTML = md.render(binding.value);
+            el.innerHTML = md.render(binding.value ?? '');
         },
         updated(el, binding) {
-            el.innerHTML = md.render(binding.value);
+            el.innerHTML = md.render(binding.value ?? '');
         }
     });
 }

@@ -37,7 +37,6 @@ import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { RouteNames } from 'router/modules/home';
 import { getSiteInfo } from 'apis/site';
-import { message } from 'ant-design-vue';
 
 export default defineComponent({
     name: 'AuthorInfo',
@@ -47,14 +46,8 @@ export default defineComponent({
         const siteName = ref('');
 
         const loadData = async () => {
-            const { code, msg, data = {} } = await getSiteInfo();
+            const { data: { author = '', name = '', desc = '' } } = await getSiteInfo();
 
-            if (code) {
-                message.error(msg || 'fail to load site info!');
-                return;
-            }
-
-            const { author = '', name = '', desc = [] } = data;
             authorName.value = author;
             siteName.value = name;
             introList.value = desc.split('\\n');

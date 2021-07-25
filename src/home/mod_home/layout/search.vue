@@ -77,7 +77,7 @@ export default defineComponent({
 
     &__input {
         width: 90%;
-        max-width: var(--max-container);
+        max-width: var(--container-max-width);
     }
 }
 </style>

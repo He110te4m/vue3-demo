@@ -21,7 +21,6 @@
 
 import { defineComponent, onMounted, ref } from 'vue';
 import { getLinks } from 'apis/link';
-import { message } from 'ant-design-vue';
 
 interface LinkInfo {
     id: number;
@@ -37,13 +36,7 @@ export default defineComponent({
         const linkList = ref([] as LinkInfo[]);
 
         const loadData = async () => {
-            const { code, msg, data = [] } = await getLinks();
-
-            if (code) {
-                message.error(msg || 'fail to load link list!');
-                return;
-            }
-
+            const { data = [] } = await getLinks();
             linkList.value = data;
         };
 

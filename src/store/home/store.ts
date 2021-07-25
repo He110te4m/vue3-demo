@@ -6,13 +6,10 @@
  * @Last Modified time: 2021-05-23 14:12:56
  */
 
-import type { Store } from 'vuex';
-import type { FixCommit, FixDispatch, FixGetter } from '../types';
-
-import { homeActions, HomeActions } from './actions';
-import { homeGetters, HomeGetters } from './getters';
-import { HomeMutations, homeMutations } from './mutations';
-import { HomeState, homeState } from './state';
+import { homeActions } from './actions';
+import { homeGetters } from './getters';
+import { homeMutations } from './mutations';
+import { homeState } from './state';
 
 export const homeStore = {
     state: homeState,

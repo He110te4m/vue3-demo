@@ -2,7 +2,8 @@ import { RouteRecordRaw } from 'vue-router';
 
 export const enum RouteNames {
     index = 'home',
-    articles = 'articles'
+    article = 'article',
+    articles = 'articles',
 }
 
 export const routes: RouteRecordRaw[] = [
@@ -15,9 +16,15 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('home/mod_home/index.vue'),
         children: [
             {
-                path: 'articles',
+                path: 'article_list',
                 name: RouteNames.articles,
                 component: () => import('home/mod_home/article_list/index.vue')
+            },
+            {
+                path: 'article/:id',
+                name: RouteNames.article,
+                props: route => ({ id: route.params.id }),
+                component: () => import('home/mod_home/article_detail/index.vue')
             }
         ]
     }

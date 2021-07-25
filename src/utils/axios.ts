@@ -1,14 +1,14 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const isDev = import.meta.env.DEV;
-
 const AXIOS_CONFIG: AxiosRequestConfig = {
-    baseURL: isDev ? 'http://localhost:8080/' : '/api/'
+    baseURL: '/blog/'
 };
 
 const service = axios.create(AXIOS_CONFIG);
 
 function onRequest(config: AxiosRequestConfig): AxiosRequestConfig {
+    config.url = config.url && !config.url.includes('.') ? `${config.url}.json` : config.url;
+
     return config;
 }
 

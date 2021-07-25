@@ -20,7 +20,6 @@
 
 import { defineComponent, onMounted, ref } from 'vue';
 import { getSocials } from 'apis/social';
-import { message } from 'ant-design-vue';
 
 interface SocialInfo {
     id: number;
@@ -35,12 +34,7 @@ export default defineComponent({
         const socialList = ref([] as SocialInfo[]);
 
         const loadData = async () => {
-            const { code, msg, data = [] } = await getSocials()
-
-            if (code) {
-                message.error(msg || 'fail to load social link list!')
-                return;
-            }
+            const { data = [] } = await getSocials()
 
             socialList.value = data;
         };
