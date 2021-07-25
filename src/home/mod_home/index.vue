@@ -4,7 +4,7 @@
         <search />
         <main class="container">
             <keep-alive>
-                <router-view></router-view>
+                <router-view />
             </keep-alive>
         </main>
     </div>

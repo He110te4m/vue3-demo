@@ -1,14 +1,11 @@
 import { axios } from 'utils/axios';
 
-const articleUrl = 'articles';
+const articleListUrl = 'articles/list';
 
-const defaultLimit = 10;
+export async function getArticles(): Promise<ApiReturn> {
+    return axios.get(articleListUrl);
+}
 
-export async function getArticles(page: number, limit = defaultLimit): Promise<ApiReturn> {
-    return axios.get(articleUrl, {
-        params: {
-            page,
-            limit
-        }
-    });
+export async function getArticleByID(id: string): Promise<ApiReturn> {
+    return axios.get(`${articleListUrl}/${id}.md`);
 }

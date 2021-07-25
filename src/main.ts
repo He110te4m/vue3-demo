@@ -1,7 +1,8 @@
-import { createApp } from 'vue';
-import App from 'home/mod_launch/app.vue';
+import { App, createApp } from 'vue';
+import Blog from 'home/mod_launch/app.vue';
 import router from 'router/index';
 import { store } from 'store/index';
+import { ArticleActionsName } from 'store/article/actions_name';
 import { registerDirectives } from './directives';
 
 import Antd from 'ant-design-vue';
@@ -11,16 +12,30 @@ import 'common/style/index.less';
 
 const isDev = import.meta.env.DEV;
 
-const app = createApp(App);
+function initApp() {
+    const app = createApp(Blog);
 
-app.config.performance = isDev;
+    app.use(router).use(store).use(Antd);
 
-app.use(router).use(store).use(Antd);
+    registerDirectives(app);
 
-registerDirectives(app);
+    app.mount('#app');
 
-app.mount('#app');
+    if (isDev) {
+        (window as AnyObj).appRoot = app;
+    }
 
-if (isDev) {
-    (window as AnyObj).appRoot = app;
+    return app;
 }
+
+function initEnv(app: App<Element>) {
+    app.config.performance = isDev;
+    store.dispatch(ArticleActionsName.initArticle);
+}
+
+function init() {
+    const app = initApp();
+    initEnv(app);
+}
+
+init();

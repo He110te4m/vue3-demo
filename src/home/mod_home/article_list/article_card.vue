@@ -1,28 +1,30 @@
 <template>
     <div class="article-card">
-        <div class="article-card__header">
-            <router-link :to="`article?id=${article.id}`" class="article-card__header__title link">
+        <header class="article-card__header">
+            <router-link
+                :to="`article/${article.id}`"
+                class="article-card__header__title link">
                 {{ article.title }}
             </router-link>
-        </div>
+        </header>
         <div class="article-card__info">
             <div class="article-card__info__time">
-                {{ article.created_at }}
+                {{ article.createdAt }}
             </div>
-            <div class="article-card__info__time--separator">-</div>
-            <div class="article-card__info__time">
-                {{ article.updated_at }}
-            </div>
+            <!-- <div class="article-card__info__time--separator">-</div> -->
+            <!-- <div class="article-card__info__time">
+                {{ article.updatedAt }}
+            </div> -->
         </div>
         <div class="article-card__body">
             <div class="article-card__body__desc"
                  v-markdown="article.desc">
             </div>
         </div>
-        <div class="article-card__footer">
+        <footer class="article-card__footer">
             <div class="article-card__footer__category"></div>
             <dl class="article-card__footer__tags"></dl>
-        </div>
+        </footer>
     </div>
 </template>
 
@@ -34,7 +36,7 @@
  * @description:
  */
 
-import type { Article } from './interface';
+import type { ArticleInfo } from '../interface';
 
 import { defineComponent } from 'vue';
 
@@ -43,7 +45,7 @@ export default defineComponent({
     props: {
         article: {
             type: Object,
-            default: () => ({} as Article)
+            default: () => ({} as ArticleInfo)
         }
     },
     setup () {
@@ -60,7 +62,7 @@ export default defineComponent({
 
     &__header {
         text-align: center;
-        margin-bottom: .8rem;
+        margin-bottom: var(--sm-seperator-size);
 
         &__title {
             font-size: 2rem;
@@ -70,11 +72,11 @@ export default defineComponent({
     &__info {
         display: flex;
         justify-content: center;
-        margin-bottom: .8rem;
+        margin-bottom: var(--sm-seperator-size);
 
         &__time {
             &--separator {
-                margin: 0 .8rem;
+                margin: 0 var(--sm-seperator-size);
             }
         }
     }
